@@ -4,6 +4,7 @@ const Promise = require('promise');
 const Config = require('../config/Config');
 
 module.exports = {
+    //TODO: should add lodash to chain the promises
     insertValuesIntoGoogleSheet: function (values) {
         return new Promise(function (onSuccess, onFailure) {
             return oAuthService.getOauthObject().then(function (auth) {

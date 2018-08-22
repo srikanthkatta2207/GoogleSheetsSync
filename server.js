@@ -17,21 +17,16 @@ app.post(Config.slashCommand, function (req, res) {
         "response_type": "in_channel",
         "text": "Uploading time sheets in progress..."
     };
-
     Utils.sendImmediateResponse(data,res);
-
     googleSheetsApiService.insertValuesIntoGoogleSheet(mergedValues).then(function (response) {
-
+        //TODO: should pass reponse back to slack
         console.log(response);
-
         Utils.sendDelayedRequestToSlashCommandOnSuccess(req.body.response_url);
 
     }).catch(function (error) {
-
+        //TODO: should pass the error back to slack
         console.log(error);
-
         Utils.sendDelayedRequestToSlashCommandOnFailure(req.body.response_url);
     });
 });
-
 app.listen(Config.serverPort);
