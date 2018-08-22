@@ -11,19 +11,19 @@ let options = {
     json: ""
 };
 
+const sendRequest = function (data,req_url) {
+
+    options.url = req_url;
+
+    options.json = data;
+
+    request(options, function (error, response, body) {
+        if (!error && response.statusCode == 200) console.log(body);
+        else console.log(error);
+    });
+};
+
 module.exports = {
-
-    sendRequest: function (data,req_url) {
-
-        options.url = req_url;
-
-        options.json = data;
-
-        request(options, function (error, response, body) {
-            if (!error && response.statusCode == 200) console.log(body);
-            else console.log(error);
-        });
-    },
 
     sendDelayedRequestToSlashCommandOnSuccess: function (req_url) {
         let successData = {
