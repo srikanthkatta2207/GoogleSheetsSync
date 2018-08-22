@@ -6,5 +6,6 @@ module.exports = {
     credentialsPath:"credentials.json",
     tokenPath:"token.json",
     slashCommandDelimiter:" ",
+    slashCommand:"/sendTimeCards",
     serverPort:8080
 };

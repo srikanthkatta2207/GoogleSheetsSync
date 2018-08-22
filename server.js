@@ -7,7 +7,7 @@ let Config = require("./config/Config");
 
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.post('/test', function (req, res) {
+app.post(Config.slashCommand, function (req, res) {
     let values = [];
     let message = req.body.text.split(Config.slashCommandDelimiter);
     let name = req.body.user_name;
