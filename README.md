@@ -1,2 +1,4 @@
-# GoogleSheetsSync
-Syncing values to google sheets
+# TimeCardSlackBot
+Prerequisites:
+  node
+  npm
