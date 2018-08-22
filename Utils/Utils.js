@@ -5,7 +5,7 @@ const headers = {
 };
 
 let options = {
-    url: req.body.response_url,
+    url:"",
     method: 'POST',
     headers: headers,
     json: ""
@@ -13,7 +13,9 @@ let options = {
 
 module.exports = {
 
-    sendRequest: function (data) {
+    sendRequest: function (data,req_url) {
+
+        options.url = req_url;
 
         options.json = data;
 
@@ -23,22 +25,23 @@ module.exports = {
         });
     },
 
-    sendDelayedRequestToSlashCommandOnSuccess: function () {
+    sendDelayedRequestToSlashCommandOnSuccess: function (req_url) {
         let successData = {
             "response_type": "in_channel",
             "text": "Successfully Uploaded the time sheets"
         };
 
-        sendRequest(successData)
+
+        sendRequest(successData,req_url)
     },
 
-    sendDelayedRequestToSlashCommandOnFailure: function () {
+    sendDelayedRequestToSlashCommandOnFailure: function (req_url) {
         let errorData = {
             "response_type": "ephemeral",
             "text": err
         };
 
-        sendRequest(errorData);
+        sendRequest(errorData,req_url);
     },
 
     sendImmediateResponse: function (data, res) {
