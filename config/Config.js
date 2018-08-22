@@ -4,5 +4,7 @@ module.exports = {
     majorDimension:"ROWS",
     includeGridData:true,
     credentialsPath:"credentials.json",
-    tokenPath:"token.json"
+    tokenPath:"token.json",
+    slashCommandDelimiter:" ",
+    serverPort:8080
 };

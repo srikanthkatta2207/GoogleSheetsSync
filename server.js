@@ -2,31 +2,36 @@ let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
 let googleSheetsApiService = require('./services/GoogleSheetsApiService');
+let Utils = require('./Utils/Utils');
+let Config = require("./config/Config");
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 
-app.post('/test', function(req, res) {
+app.post('/test', function (req, res) {
     let values = [];
-    let message = req.body.text.split(" ");
+    let message = req.body.text.split(Config.slashCommandDelimiter);
     let name = req.body.user_name;
-    values.push(name,message);
-    let mergedValues = [].concat.apply([],values);
-    googleSheetsApiService.insertTheValuesIntoGoogleSheet(mergedValues).then(function (response) {
+    values.push(name, message);
+    let mergedValues = [].concat.apply([], values);
+    let data = {
+        "response_type": "in_channel",
+        "text": "Uploading time sheets in progress..."
+    };
 
-        let successData = {
-            "response_type": "in_channel",
-            "text": response
-        };
-       res.status(200);
-       res.setHeader('content-type', 'application/json');
-       res.send(successData);
-    }).catch(function (err) {
-        let errorData = {
-            "response_type": "ephemeral",
-            "text": err
-        };
-        res.setHeader('content-type', 'application/json');
-        res.status(404).send(errorData)
+    Utils.sendImmediateResponse(data,res);
+
+    googleSheetsApiService.insertValuesIntoGoogleSheet(mergedValues).then(function (response) {
+
+        console.log(response);
+
+        Utils.sendDelayedRequestToSlashCommandOnSuccess(req.body.response_url);
+
+    }).catch(function (error) {
+
+        console.log(error);
+
+        Utils.sendDelayedRequestToSlashCommandOnFailure(req.body.response_url);
     });
 });
-app.listen(8080);
+
+app.listen(Config.serverPort);

@@ -4,7 +4,7 @@ const Promise = require('promise');
 const Config = require('../config/Config');
 
 module.exports = {
-    insertTheValuesIntoGoogleSheet: function (values) {
+    insertValuesIntoGoogleSheet: function (values) {
         return new Promise(function (onSuccess, onFailure) {
             return oAuthService.getOauthObject().then(function (auth) {
                 const sheets = google.sheets({version: 'v4', auth});
@@ -19,7 +19,6 @@ module.exports = {
                         }
                     }, (err, res) => {
                         if (err) return onFailure(err);
-                        console.log("hellop")
                         return onSuccess(res);
                     });
                 })
