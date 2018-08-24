@@ -16,7 +16,7 @@ module.exports = {
                         valueInputOption: Config.valueInputOption,
                         resource: {
                             majorDimension: Config.majorDimension,
-                            values: [[values[0], values[1], values[2]]]
+                            values: [values]
                         }
                     }, (err, res) => {
                         if (err) return onFailure(err);
